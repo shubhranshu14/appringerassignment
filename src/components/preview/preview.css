@@ -1,0 +1,154 @@
+.flx {
+  display: flex;
+  gap: 5px;
+}
+.flx-clm {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.preview {
+  width: 50%;
+  padding: 10px;
+  background-color: #656e83;
+}
+.previewHeader {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  color: #fff;
+}
+.previewHeader_one {
+  display: flex;
+  align-items: center;
+}
+.templateBtn {
+  display: flex;
+  align-items: center;
+  padding-right: 20px;
+  border-right: 2px solid #afafaf;
+  cursor: pointer;
+  position: relative;
+}
+.color_palate {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  background-color: #0000006f;
+  gap: 5px;
+  padding: 5px 10px;
+  border-radius: 4px;
+  top: 100%;
+}
+.color_palate .color_holder {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+}
+.color_palate .color_holder:hover {
+  border: 1px solid #fff;
+}
+.templateBtn p {
+  font-weight: 400px;
+  font-size: 14px;
+}
+.fontBtn {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding-left: 10px;
+}
+.fontBtn h4 {
+  font-size: 20px;
+  font-weight: 400;
+}
+.fontBtn button {
+  background-color: transparent;
+  border: 0 none;
+  display: flex;
+  border-radius: 50%;
+  align-items: center;
+  color: #fff;
+  cursor: pointer;
+}
+.fontBtn button:hover {
+  background-color: #2d2d2d;
+}
+.downloadBtns {
+  display: flex;
+  gap: 10px;
+}
+.downloadBtns button {
+  display: flex;
+  align-items: center;
+  padding: 5px 10px;
+  border: 0 none;
+  border-radius: 4px;
+  background-color: #1a91f0;
+  color: #fff;
+  font-weight: 600;
+  cursor: pointer;
+}
+.downloadBtns button:hover {
+  background-color: #1170cd;
+}
+
+.preview_main_container {
+  display: flex;
+  width: 400px;
+  height: 600px;
+  margin-top: 36px;
+  border-radius: 6px;
+  box-shadow: 0 0 16px rgb(61, 61, 61);
+  background-color: white;
+  margin-left: auto;
+  margin-right: auto;
+}
+.preview_main_container .personal_details {
+  width: 40%;
+  height: 100%;
+  border-radius: 6px 0 0 6px;
+  color: #fff;
+  padding: 20px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.personal_details h4 {
+  font-size: 12px;
+}
+.personal_details h6 {
+  font-size: 10px;
+  font-weight: 200;
+}
+.personal_details p,
+.experience_details p {
+  font-size: 8px;
+  color: #afafaf;
+  line-height: 12px;
+}
+.profile_photo {
+  width: 40px;
+  height: 40px;
+}
+.profile_photo img {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+}
+.preview_main_container .experience_details {
+  width: 60%;
+  height: 100%;
+  padding: 20px;
+}
+.profile_dis {
+  width: 100%;
+  word-wrap: break-word;
+}
+
+@media (max-width: 1198px) {
+  .preview {
+    width: auto;
+  }
+}
