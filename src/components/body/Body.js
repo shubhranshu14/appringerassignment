@@ -21,6 +21,7 @@ function Body() {
     experience: [],
     skill: [],
   });
+  console.log(information.education);
 
   return (
     <div className="body">

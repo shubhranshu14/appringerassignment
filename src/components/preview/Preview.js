@@ -52,19 +52,17 @@ function Preview(props) {
           </button>
         </div>
         <div className="avatar">
-          <Avatar />
+          <Avatar src={information.personal.photo} />
         </div>
       </div>
       <div className="preview_main_container">
+        {/* this is the left part of the preview, it contains profile photo, name, address, phone, email and skills */}
         <div className="personal_details" style={{ backgroundColor: color }}>
-          {/* {information.personal.photo !== "" ? ( */}
-          <div className="profile_photo">
-            <img
-              src="https://platinumlist.net/guide/wp-content/uploads/2023/03/IMG-worlds-of-adventure.webp"
-              alt="profilePhoto"
-            />
-          </div>
-          {/* ) : null} */}
+          {information.personal.photo !== "" ? (
+            <div className="profile_photo">
+              <img src={information.personal.photo} alt="profilePhoto" />
+            </div>
+          ) : null}
           <div>
             {information.personal.fname !== "" ||
             information.personal.lname !== "" ? (
@@ -112,11 +110,48 @@ function Preview(props) {
             </div>
           ) : null}
         </div>
+        {/* this is the right part of the preview it contains profile, experience, education */}
         <div className="experience_details">
           {information.personal.profile !== "" ? (
             <div className="profile_dis flx-clm">
               <h4>Profile</h4>
               <p>{information.personal.profile}</p>
+            </div>
+          ) : null}
+          {information.experience.length !== 0 ? (
+            <div className="profile_experience">
+              <h4>Experience</h4>
+              {information.experience.map((data, idx) => (
+                <div className="profile_exp_tab" key={idx}>
+                  <h6>
+                    {data.companyname},{data.city}
+                  </h6>
+                  <h6>{data.title}</h6>
+                  <p>
+                    {data.startdate} - {data.enddate}
+                  </p>
+                  <ul>
+                    {data.description.map((data, idx) => (
+                      <li key={idx}>{data}</li>
+                    ))}
+                  </ul>
+                </div>
+              ))}
+            </div>
+          ) : null}
+          {information.education.length !== 0 ? (
+            <div className="profile_education">
+              <h4>Education</h4>
+              {information.education.map((data, idx) => (
+                <div className="profile_edu_tab" key={idx}>
+                  <h6>
+                    {data.schoolname},{data.city}
+                  </h6>
+                  <p>
+                    {data.degree}, {data.startdate} - {data.enddate}
+                  </p>
+                </div>
+              ))}
             </div>
           ) : null}
         </div>

@@ -65,11 +65,20 @@ function FormEditor(props) {
             setInformation={setInformation}
           />
         ) : currentSection === 1 ? (
-          <Education information={information.education} />
+          <Education
+            information={information.education}
+            setInformation={setInformation}
+          />
         ) : currentSection === 2 ? (
-          <Experience information={information.experience} />
+          <Experience
+            information={information.experience}
+            setInformation={setInformation}
+          />
         ) : (
-          <Skills information={information.skill} />
+          <Skills
+            information={information.skill}
+            setInformation={setInformation}
+          />
         )}
         <div className="next_prev_holder">
           <button onClick={handlePrev} disabled={currentSection === 0}>

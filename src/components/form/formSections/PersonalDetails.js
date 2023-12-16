@@ -12,19 +12,29 @@ function PersonalDetails(props) {
     }
   });
 
-  // const handlePersonal = (e) => {
-  //   const { name, value } = e.target;
-  //   setInformation((prev) => ({
-  //     ...prev,
-  //     personal: {
-  //       ...prev.personal,
-  //       detail: {
-  //         ...prev.personal.detail,
-  //         [name]: value,
-  //       },
-  //     },
-  //   }));
-  // };
+  // for img file upload
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
+
+    if (file) {
+      const reader = new FileReader();
+
+      reader.onloadend = () => {
+        const imageDataUrl = reader.result;
+
+        setInformation((prev) => ({
+          ...prev,
+          personal: {
+            ...prev.personal,
+            photo: imageDataUrl,
+          },
+        }));
+      };
+
+      reader.readAsDataURL(file);
+    }
+  };
+
   return (
     <div className="form">
       <div className="form_row">
@@ -54,16 +64,7 @@ function PersonalDetails(props) {
               style={{ display: "none" }}
               name="photo"
               type="file"
-              value={information.photo}
-              onChange={(e) =>
-                setInformation((prev) => ({
-                  ...prev,
-                  personal: {
-                    ...prev.personal,
-                    photo: e.target.value,
-                  },
-                }))
-              }
+              onChange={(e) => handleFileChange(e)}
             />
             <label htmlFor="filephoto">Upload photo</label>
           </div>
