@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import "./body.css";
 import FormEditor from "../form/FormEditor";
 import Preview from "../preview/Preview";
@@ -21,7 +21,7 @@ function Body() {
     experience: [],
     skill: [],
   });
-  console.log(information.education);
+  console.log(information.skill);
 
   return (
     <div className="body">

@@ -32,3 +32,8 @@
     width: auto;
   }
 }
+@media (max-width: 490px) {
+  .progressPercent {
+    font-size: 8px;
+  }
+}

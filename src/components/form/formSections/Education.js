@@ -4,6 +4,11 @@ import React, { useState } from "react";
 function Education(props) {
   const information = props.information;
   const setInformation = props.setInformation;
+  const setIsSnackOpen = props.setIsSnackOpen;
+  const setProgressValue = props.setProgressValue;
+  const progressValue = props.progressValue;
+  const [progressUpdated, setProgressUpdated] = useState(false);
+
   const [educationinfo, setEducationinfo] = useState({
     schoolname: "",
     degree: "",
@@ -48,10 +53,25 @@ function Education(props) {
       });
     } else {
       // If there's no active tab, add a new entry to the education array
+      if (
+        educationinfo.schoolname == "" &&
+        educationinfo.degree == "" &&
+        educationinfo.startdate == "" &&
+        educationinfo.enddate == "" &&
+        educationinfo.city == ""
+      ) {
+        setIsSnackOpen(true);
+        return;
+      }
       setInformation((prev) => ({
         ...prev,
         education: [...prev.education, { ...educationinfo }],
       }));
+    }
+
+    if (educationinfo.schoolname !== "" && !progressUpdated) {
+      setProgressValue(progressValue + 25);
+      setProgressUpdated(true);
     }
 
     setEducationinfo({

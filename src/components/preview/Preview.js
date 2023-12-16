@@ -1,19 +1,73 @@
 import { Avatar } from "@mui/material";
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
+import html2canvas from "html2canvas";
+import jsPDF from "jspdf";
+import Docxtemplater from "docxtemplater";
+import JSZip from "jszip";
+import { saveAs } from "file-saver";
 import "./preview.css";
-import { Add, MoreHoriz, Remove, WindowOutlined } from "@mui/icons-material";
+import {
+  Add,
+  Description,
+  InsertDriveFile,
+  MoreHoriz,
+  Remove,
+  WindowOutlined,
+} from "@mui/icons-material";
 
 function Preview(props) {
   const information = props.information;
+  const previewContainerRef = useRef(null);
   const [isColorOpen, setIsColorOpen] = useState(false);
   const colorPalate = ["#1e2532", "#a85a0e", "#282b8f", "#094025"];
   const [color, setColor] = useState("#1e2532");
+  const [isDropOpen, setIsDropOpen] = useState(false);
 
   const handleColor = (e, color) => {
     e.stopPropagation();
     setColor(color);
     setIsColorOpen(false);
   };
+
+  // to download resume as PDF
+  const downloadPDF = () => {
+    if (previewContainerRef.current) {
+      html2canvas(previewContainerRef.current).then((canvas) => {
+        const imgData = canvas.toDataURL("image/png");
+
+        const pdf = new jsPDF("p", "mm", "a4");
+        pdf.addImage(imgData, "PNG", 0, 0, 210, 297); // A4 size: 210 x 297 mm
+        pdf.save("resume.pdf");
+      });
+    }
+  };
+
+  // to download resume as DOCX
+  const downloadDOCX = () => {
+    if (previewContainerRef.current) {
+      const htmlContent = previewContainerRef.current.innerHTML;
+
+      const zip = new JSZip();
+      zip
+        .loadAsync(htmlContent, { decodeFileName: "utf8" })
+        .then((zip) => {
+          const doc = new Docxtemplater();
+          doc.loadZip(zip);
+
+          try {
+            doc.render();
+            const buffer = doc.getZip().generate({ type: "blob" });
+            saveAs(buffer, "resume.docx");
+          } catch (error) {
+            console.error("Error rendering DOCX:", error);
+          }
+        })
+        .catch((error) => {
+          console.error("Error loading zip file:", error);
+        });
+    }
+  };
+
   return (
     <div className="preview">
       <div className="previewHeader">
@@ -46,16 +100,26 @@ function Preview(props) {
         </div>
 
         <div className="downloadBtns">
-          <button id="pdfBtn">Download PDF</button>
-          <button id="moreBtn">
+          <button id="pdfBtn" onClick={downloadPDF}>
+            Download PDF
+          </button>
+          <button id="moreBtn" onClick={() => setIsDropOpen(!isDropOpen)}>
             <MoreHoriz />
           </button>
+          {isDropOpen ? (
+            <div className="dropdown_menu">
+              <div className="docx flx" onClick={downloadDOCX}>
+                <InsertDriveFile fontSize="small" />
+                <h4>Export To DOCX</h4>
+              </div>
+            </div>
+          ) : null}
         </div>
         <div className="avatar">
           <Avatar src={information.personal.photo} />
         </div>
       </div>
-      <div className="preview_main_container">
+      <div className="preview_main_container" ref={previewContainerRef}>
         {/* this is the left part of the preview, it contains profile photo, name, address, phone, email and skills */}
         <div className="personal_details" style={{ backgroundColor: color }}>
           {information.personal.photo !== "" ? (
@@ -83,7 +147,7 @@ function Preview(props) {
           information.personal.email !== "" ? (
             <div className="profile_details flx-clm">
               <h4>Details</h4>
-              <div>
+              <div className="flx-clm-2px">
                 {information.personal.city !== "" ||
                 information.personal.country !== "" ? (
                   <div className="profile_address">
@@ -109,6 +173,17 @@ function Preview(props) {
               </div>
             </div>
           ) : null}
+          {information.skill.length !== 0 ? (
+            <div className="profile_skills flx-clm">
+              <h4>Skills</h4>
+              {information.skill.map((data, idx) => (
+                <div key={idx} className="flx-clm-2px">
+                  <p>{data.skillname}</p>
+                  <progress value={data.skilllevel} max="100"></progress>
+                </div>
+              ))}
+            </div>
+          ) : null}
         </div>
         {/* this is the right part of the preview it contains profile, experience, education */}
         <div className="experience_details">
@@ -119,7 +194,7 @@ function Preview(props) {
             </div>
           ) : null}
           {information.experience.length !== 0 ? (
-            <div className="profile_experience">
+            <div className="profile_experience flx-clm">
               <h4>Experience</h4>
               {information.experience.map((data, idx) => (
                 <div className="profile_exp_tab" key={idx}>
@@ -140,7 +215,7 @@ function Preview(props) {
             </div>
           ) : null}
           {information.education.length !== 0 ? (
-            <div className="profile_education">
+            <div className="profile_education flx-clm">
               <h4>Education</h4>
               {information.education.map((data, idx) => (
                 <div className="profile_edu_tab" key={idx}>

@@ -4,22 +4,39 @@ import PersonalDetails from "./formSections/PersonalDetails";
 import Education from "./formSections/Education";
 import Experience from "./formSections/Experience";
 import Skills from "./formSections/Skills";
+import { Snackbar } from "@mui/material";
 
 function FormEditor(props) {
   const information = props.information;
   const setInformation = props.setInformation;
   const sections = props.formTitles;
   const [currentSection, setCurrentSection] = useState(0);
+  const [isSnackOpen, setIsSnackOpen] = useState(false);
+  const [progressValue, setProgressValue] = useState(0);
+  const [progressUpdated, setProgressUpdated] = useState(false);
 
-  const handleSave = () => {
+  const handleNext = () => {
     if (currentSection !== sections.length - 1) {
       setCurrentSection(currentSection + 1);
+    }
+    if (
+      information.personal.fname !== "" &&
+      information.personal.lname !== "" &&
+      !progressUpdated
+    ) {
+      setProgressValue(progressValue + 25);
+      setProgressUpdated(true);
     }
   };
   const handlePrev = () => {
     if (currentSection !== 0) {
       setCurrentSection(currentSection - 1);
     }
+  };
+
+  //for closing snackbar
+  const handleCloseSnackbar = () => {
+    setIsSnackOpen(false);
   };
 
   return (
@@ -36,7 +53,7 @@ function FormEditor(props) {
                 color: "white",
               }}
             >
-              <p style={{ fontWeight: "600" }}>0%</p>
+              <p style={{ fontWeight: "600" }}>{progressValue}%</p>
             </div>
             <p>Resume Score</p>
           </div>
@@ -55,7 +72,7 @@ function FormEditor(props) {
             <p>Add {sections[currentSection]}</p>
           </div>
         </div>
-        <progress value="0" max="100"></progress>
+        <progress value={progressValue} max="100"></progress>
       </div>
       <div className="formContainer">
         {<h2>{sections[currentSection]}</h2>}
@@ -68,27 +85,45 @@ function FormEditor(props) {
           <Education
             information={information.education}
             setInformation={setInformation}
+            setIsSnackOpen={setIsSnackOpen}
+            progressValue={progressValue}
+            setProgressValue={setProgressValue}
           />
         ) : currentSection === 2 ? (
           <Experience
             information={information.experience}
             setInformation={setInformation}
+            setIsSnackOpen={setIsSnackOpen}
+            progressValue={progressValue}
+            setProgressValue={setProgressValue}
           />
         ) : (
           <Skills
             information={information.skill}
             setInformation={setInformation}
+            setIsSnackOpen={setIsSnackOpen}
+            progressValue={progressValue}
+            setProgressValue={setProgressValue}
           />
         )}
         <div className="next_prev_holder">
           <button onClick={handlePrev} disabled={currentSection === 0}>
             Prev
           </button>
-          <button onClick={handleSave}>
-            {currentSection === sections.length - 1 ? "Save" : "Next"}
+          <button
+            onClick={handleNext}
+            disabled={currentSection === sections.length - 1}
+          >
+            Next
           </button>
         </div>
       </div>
+      <Snackbar
+        open={isSnackOpen}
+        onClose={handleCloseSnackbar}
+        autoHideDuration={3000}
+        message="Fill information"
+      />
     </div>
   );
 }

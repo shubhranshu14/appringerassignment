@@ -101,3 +101,12 @@
 .addMore_row:hover {
   background-color: #4fabf639;
 }
+
+@media (max-width: 490px) {
+  .form_row {
+    flex-direction: column;
+  }
+  .form_input_container {
+    width: 100%;
+  }
+}

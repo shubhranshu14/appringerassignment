@@ -4,6 +4,10 @@ import React, { useState } from "react";
 function Experience(props) {
   const information = props.information;
   const setInformation = props.setInformation;
+  const setIsSnackOpen = props.setIsSnackOpen;
+  const setProgressValue = props.setProgressValue;
+  const progressValue = props.progressValue;
+  const [progressUpdated, setProgressUpdated] = useState(false);
 
   const [experienceinfo, setExperienceinfo] = useState({
     title: "",
@@ -41,10 +45,25 @@ function Experience(props) {
         };
       });
     } else {
+      if (
+        experienceinfo.title == "" &&
+        experienceinfo.companyname == "" &&
+        experienceinfo.startdate == "" &&
+        experienceinfo.enddate == "" &&
+        experienceinfo.city == ""
+      ) {
+        setIsSnackOpen(true);
+        return;
+      }
       setInformation((prev) => ({
         ...prev,
         experience: [...prev.experience, { ...experienceinfo }],
       }));
+    }
+
+    if (experienceinfo.companyname !== "" && !progressUpdated) {
+      setProgressValue(progressValue + 25);
+      setProgressUpdated(true);
     }
 
     setExperienceinfo({
