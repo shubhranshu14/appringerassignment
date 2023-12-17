@@ -1,3 +1,6 @@
+a {
+  text-decoration: none;
+}
 .form {
   min-height: 528px;
 }
@@ -101,7 +104,25 @@
 .addMore_row:hover {
   background-color: #4fabf639;
 }
-
+.personalForm {
+  height: 528px;
+  overflow-y: scroll;
+}
+.personalForm::-webkit-scrollbar {
+  width: 8px;
+}
+.personalForm::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+.personalForm::-webkit-scrollbar-thumb {
+  background: #888;
+}
+@media (max-width: 1198px) {
+  .personalForm {
+    height: auto;
+    overflow-y: visible;
+  }
+}
 @media (max-width: 490px) {
   .form_row {
     flex-direction: column;

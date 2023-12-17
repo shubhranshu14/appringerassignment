@@ -2,13 +2,10 @@ import { Avatar } from "@mui/material";
 import React, { useRef, useState } from "react";
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
-import Docxtemplater from "docxtemplater";
-import JSZip from "jszip";
-import { saveAs } from "file-saver";
+import { useReactToPrint } from "react-to-print";
 import "./preview.css";
 import {
   Add,
-  Description,
   InsertDriveFile,
   MoreHoriz,
   Remove,
@@ -42,30 +39,12 @@ function Preview(props) {
     }
   };
 
-  // to download resume as DOCX
-  const downloadDOCX = () => {
-    if (previewContainerRef.current) {
-      const htmlContent = previewContainerRef.current.innerHTML;
-
-      const zip = new JSZip();
-      zip
-        .loadAsync(htmlContent, { decodeFileName: "utf8" })
-        .then((zip) => {
-          const doc = new Docxtemplater();
-          doc.loadZip(zip);
-
-          try {
-            doc.render();
-            const buffer = doc.getZip().generate({ type: "blob" });
-            saveAs(buffer, "resume.docx");
-          } catch (error) {
-            console.error("Error rendering DOCX:", error);
-          }
-        })
-        .catch((error) => {
-          console.error("Error loading zip file:", error);
-        });
-    }
+  const handlePrint = useReactToPrint({
+    content: () => previewContainerRef.current,
+  });
+  const handleDocx = () => {
+    handlePrint();
+    setIsDropOpen(false);
   };
 
   return (
@@ -108,7 +87,7 @@ function Preview(props) {
           </button>
           {isDropOpen ? (
             <div className="dropdown_menu">
-              <div className="docx flx" onClick={downloadDOCX}>
+              <div className="docx flx" onClick={handleDocx}>
                 <InsertDriveFile fontSize="small" />
                 <h4>Export To DOCX</h4>
               </div>
@@ -173,6 +152,27 @@ function Preview(props) {
               </div>
             </div>
           ) : null}
+          {information.personal.github !== "" ||
+          information.personal.linkedin !== "" ? (
+            <div className="profile_links flx-clm">
+              <h4>Links</h4>
+              {information.personal.github !== "" ? (
+                <div className="profile_github">
+                  <a href={information.personal.github} target="_blank">
+                    <p>Github</p>
+                  </a>
+                </div>
+              ) : null}
+              {information.personal.linkedin !== "" ? (
+                <div className="profile_linkedin">
+                  <a href={information.personal.linkedin} target="_blank">
+                    <p>LinkedIn</p>
+                  </a>
+                </div>
+              ) : null}
+            </div>
+          ) : null}
+
           {information.skill.length !== 0 ? (
             <div className="profile_skills flx-clm">
               <h4>Skills</h4>

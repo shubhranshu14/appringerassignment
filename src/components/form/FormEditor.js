@@ -15,6 +15,7 @@ function FormEditor(props) {
   const [progressValue, setProgressValue] = useState(0);
   const [progressUpdated, setProgressUpdated] = useState(false);
 
+  // go to the next category and increase the progress bar if the information is filled
   const handleNext = () => {
     if (currentSection !== sections.length - 1) {
       setCurrentSection(currentSection + 1);
@@ -28,6 +29,7 @@ function FormEditor(props) {
       setProgressUpdated(true);
     }
   };
+  // go to the prev category
   const handlePrev = () => {
     if (currentSection !== 0) {
       setCurrentSection(currentSection - 1);
@@ -107,11 +109,19 @@ function FormEditor(props) {
           />
         )}
         <div className="next_prev_holder">
-          <button onClick={handlePrev} disabled={currentSection === 0}>
+          <button
+            onClick={handlePrev}
+            style={{ visibility: currentSection === 0 ? "hidden" : "visible" }}
+            disabled={currentSection === 0}
+          >
             Prev
           </button>
           <button
             onClick={handleNext}
+            style={{
+              visibility:
+                currentSection === sections.length - 1 ? "hidden" : "visible",
+            }}
             disabled={currentSection === sections.length - 1}
           >
             Next
@@ -122,7 +132,7 @@ function FormEditor(props) {
         open={isSnackOpen}
         onClose={handleCloseSnackbar}
         autoHideDuration={3000}
-        message="Fill information"
+        message="Please Fill The Details"
       />
     </div>
   );

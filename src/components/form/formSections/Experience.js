@@ -46,11 +46,11 @@ function Experience(props) {
       });
     } else {
       if (
-        experienceinfo.title == "" &&
-        experienceinfo.companyname == "" &&
-        experienceinfo.startdate == "" &&
-        experienceinfo.enddate == "" &&
-        experienceinfo.city == ""
+        experienceinfo.title === "" &&
+        experienceinfo.companyname === "" &&
+        experienceinfo.startdate === "" &&
+        experienceinfo.enddate === "" &&
+        experienceinfo.city === ""
       ) {
         setIsSnackOpen(true);
         return;

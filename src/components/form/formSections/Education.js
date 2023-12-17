@@ -54,11 +54,11 @@ function Education(props) {
     } else {
       // If there's no active tab, add a new entry to the education array
       if (
-        educationinfo.schoolname == "" &&
-        educationinfo.degree == "" &&
-        educationinfo.startdate == "" &&
-        educationinfo.enddate == "" &&
-        educationinfo.city == ""
+        educationinfo.schoolname === "" &&
+        educationinfo.degree === "" &&
+        educationinfo.startdate === "" &&
+        educationinfo.enddate === "" &&
+        educationinfo.city === ""
       ) {
         setIsSnackOpen(true);
         return;

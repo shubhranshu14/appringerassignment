@@ -47,7 +47,7 @@ function Skills(props) {
         };
       });
     } else {
-      if (skillinfo.skillname == "") {
+      if (skillinfo.skillname === "") {
         setIsSnackOpen(true);
         return;
       }

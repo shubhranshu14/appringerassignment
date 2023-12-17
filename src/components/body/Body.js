@@ -4,7 +4,9 @@ import FormEditor from "../form/FormEditor";
 import Preview from "../preview/Preview";
 
 function Body() {
+  // different sections of resume
   const formTitles = ["Personal Details", "Education", "Experience", "Skills"];
+
   const [information, setInformation] = useState({
     personal: {
       jobtitle: "",
@@ -13,6 +15,8 @@ function Body() {
       lname: "",
       email: "",
       phone: "",
+      github: "",
+      linkedin: "",
       country: "",
       city: "",
       profile: "",
@@ -21,7 +25,6 @@ function Body() {
     experience: [],
     skill: [],
   });
-  console.log(information.skill);
 
   return (
     <div className="body">

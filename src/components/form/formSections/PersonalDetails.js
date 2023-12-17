@@ -5,12 +5,6 @@ import { AccountBox } from "@mui/icons-material";
 function PersonalDetails(props) {
   const information = props.information;
   const setInformation = props.setInformation;
-  const [uploadPhoto, setUploadPhoto] = useState(false);
-  document.body.addEventListener("click", () => {
-    if (uploadPhoto) {
-      setUploadPhoto(false);
-    }
-  });
 
   // for img file upload
   const handleFileChange = (e) => {
@@ -36,7 +30,7 @@ function PersonalDetails(props) {
   };
 
   return (
-    <div className="form">
+    <div className="form personalForm">
       <div className="form_row">
         <div className="form_input_container">
           <h4>Wanted Job Title</h4>
@@ -130,7 +124,7 @@ function PersonalDetails(props) {
           <h4>Phone</h4>
           <input
             id="phone"
-            type="tel"
+            type="number"
             value={information.phone}
             onChange={(e) =>
               setInformation((prev) => ({
@@ -138,6 +132,43 @@ function PersonalDetails(props) {
                 personal: {
                   ...prev.personal,
                   phone: e.target.value,
+                },
+              }))
+            }
+          />
+        </div>
+      </div>
+
+      <div className="form_row">
+        <div className="form_input_container">
+          <h4>Github</h4>
+          <input
+            id="github"
+            type="url"
+            value={information.github}
+            onChange={(e) =>
+              setInformation((prev) => ({
+                ...prev,
+                personal: {
+                  ...prev.personal,
+                  github: e.target.value,
+                },
+              }))
+            }
+          />
+        </div>
+        <div className="form_input_container">
+          <h4>LinkedIn</h4>
+          <input
+            id="linkedin"
+            type="url"
+            value={information.linkedin}
+            onChange={(e) =>
+              setInformation((prev) => ({
+                ...prev,
+                personal: {
+                  ...prev.personal,
+                  linkedin: e.target.value,
                 },
               }))
             }

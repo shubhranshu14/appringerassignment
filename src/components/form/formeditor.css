@@ -18,6 +18,7 @@
 .next_prev_holder {
   display: flex;
   justify-content: space-between;
+  margin-top: 20px;
 }
 .next_prev_holder button {
   padding: 5px 10px;
@@ -25,6 +26,9 @@
   border: 0 none;
   border-radius: 4px;
   cursor: pointer;
+}
+.next_prev_holder button:hover {
+  background-color: lightgray;
 }
 
 @media (max-width: 1198px) {
